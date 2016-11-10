@@ -4,26 +4,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-void insere_tabelaListaDes(tabelaLista **t, char *chave) {
-    tabelaLista *aux, *ant, *novo;
+#include <stdio.h>
 
-    /* Percorrendo a tabela e procurando uma possivel entrada ja existente */
-    for (aux = *t, ant = NULL; aux; aux = aux->prox, ant = aux)
-        if (!strcmp(aux->chave, chave))    break;
+int nova_entrada(tabelaLista *t, char *chave) {
+   printf("%s   ", chave);
+   if (!strcmp(t->chave, chave)) {printf("tem no primeiro\n");  return 0;}
 
-    if (!aux) {    /* Se chave for uma entrada nova */
-        novo = malloc(sizeof(tabelaLista));
-        novo->chave = malloc((strlen(chave)+1)*sizeof(char));
-        novo->valor = 0;
-        novo->prox = NULL;
+   while (t->prox) {
+      if (!strcmp(t->prox->chave, chave)) {printf("tem no meio\n");  return 0;}
 
-        if (!ant)    /* Se a tabela esta vazia */
-            *t = novo;
+      t = t->prox;
+   }
+   printf("nao tem\n");
 
-        else    /* Se a chave for inserida no ultimo espaco da tabela */
-            ant->prox = novo;
-    }
+   return 1;
+}
 
-    else    /* Se chave ja foi inserida */
-        aux->valor++;
+void insere_tabelaListaDes(tabelaLista **entrada, buffer *b) {
+   tabelaLista *novo;
+   
+   novo = malloc(sizeof(tabelaLista));
+   novo->chave = malloc((b->ind+1)*sizeof(char));
+   novo->valor = 1;
+   novo->prox = NULL;
+   novo->ant = *entrada;
+   *entrada->prox = novo;
+
+   strcpy(novo->chave, b->s);
 }

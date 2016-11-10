@@ -5,9 +5,12 @@
 
 #include "tipos.h"
 
-/* A funcao retorna um ponteiro p para a nova entrada ou para a entrada ja
- * existente de uma chave */
+/* A funcao percorre a tabelaLista t ate encontrar uma entrada correspondete a
+ * string chave */
+int nova_entrada(tabelaLista *t, char *chave);
 
-void insere_tabelaListaDes(tabelaLista **t, char *chave);
+/* A funcao insere uma nova entrada da chave contida no buffer *b na tabelaLista
+ * entrada. */
+void insere_tabelaListaDes(tabelaLista **entrada, buffer *b);
 
 #endif

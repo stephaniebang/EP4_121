@@ -3,6 +3,7 @@
 #include "tipos.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 /* Funcoes para a tabela de simbolos com vetor */
 tabelaVetor *cria_tabelaVetor(int n) {
@@ -44,8 +45,24 @@ void destroi_tabelaVetor(tabelaVetor *t) {
 
 
 /* Funcoes para a tabela de simbolos com lista ligada */
-tabelaLista *cria_tabelaLista() {
-    return NULL;
+tabelaLista *cria_tabelaLista(buffer *b) {
+    tabelaLista *t;
+
+    t = malloc(sizeof(tabelaLista));
+    t->chave = malloc((b->ind+1)*sizeof(char));
+    t->prox = t->ant = NULL;
+    t->valor = 0;
+
+    strcpy(t->chave, b->s);
+
+    return t;
+}
+
+void imprime_tabelaLista(tabelaLista *t) {
+   tabelaLista *aux;
+
+   for (aux = t; aux; aux = aux->prox)
+      printf("%s %d\n", aux->chave, aux->valor);
 }
 
 void destroi_tabelaLista(tabelaLista *t) {

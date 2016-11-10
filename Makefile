@@ -3,7 +3,7 @@ CFLAGS = -Wall -ansi -pedantic -o2
 
 .PHONY: clean
 
-ep4: tabelaSimbolo.o tabelaSimbolo_VD.o buffer.o tipos.o
+ep4: tabelaSimbolo.o tabelaSimbolo_VD.o buffer.o tipos.o tabelaSimbolo_LD.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c %.h

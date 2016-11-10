@@ -44,8 +44,12 @@ typedef struct entrada {
     struct entrada *ant;
 } tabelaLista;
 
-/* A funcao retorna um ponteiro t para uma tabelaLista. */
-tabelaLista *cria_tabelaLista();
+/* A funcao retorna um ponteiro t para uma tabelaLista com o conteudo do buffer
+ * b como primeira entrada. */
+tabelaLista *cria_tabelaLista(buffer *b);
+
+/* A funcao imprime o conteudo da tabelaLista t. */
+void imprime_tabelaLista(tabelaLista *t);
 
 /* A funcao destroi a tabelaLista t. */
 void destroi_tabelaLista(tabelaLista *t);

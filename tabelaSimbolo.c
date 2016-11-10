@@ -8,38 +8,17 @@
 #include <string.h>
 #include <ctype.h>
 
-int tipo_implementacao(char *tipo) {
-   if (tipo[0] == 'V') {
-      if (tipo[1] == 'D')   return 1;
-
-      return 2;
-   }
-
-   if (tipo[0] == 'L') {
-      if (tipo[1] == 'D')   return 3;
-
-      return 4;
-   }
-
-   return 5;
-}
-
-int tipo_impressao(char *tipo) {
-   if (tipo[0] == 'O')   return 0;
-
-   return 1;
-}
-
 int main(int argc, char *argv[]) {
    buffer *palavra;
    FILE *file;
-   int implementacao, impressao;
+/*   int implementacao, impressao;*/
 
    /* Variaveis para a tabela em vetor */
-   tabelaVetor *tab;
-   entradaVetor *ent;
+   tabelaVetor *tabV;
+   entradaVetor *entV;
 
    /* Variaveis para a tabela em lista */
+   tabelaLista *tabL, *aux;
 
    /* Recebendo os argumentos */
    if (argc != 4) {
@@ -50,25 +29,37 @@ int main(int argc, char *argv[]) {
    }
 
    file = fopen(argv[1], "r");
-   implementacao = tipo_implementacao(argv[2]);
-   impressao = tipo_impressao(argv[3]);
 
-   tab = cria_tabelaVetor(50);
 
+/*   tabV = cria_tabelaVetor(50);*/
+
+   /* Guardando a primeira palavra, se ela existir */
    palavra = cria_buffer(10);
    
-   /* Guardando a primeira palavra, se ela existir */
    le_palavra(file, palavra);
 
+   if (palavra->ind)   tabL = cria_tabelaLista(palavra);
+   
    while (palavra->ind) {
-      /* Buscando a palavra lida na tabela */
-      ent = procura_tabelaVetorDes(tab, palavra->s);
+      /* Vetor desordenado *
+         * Buscando a palavra lida na tabela *
+         entV = procura_tabelaVetorDes(tabV, palavra->s);
 
-      if (ent)   /* Se a palavra ja esta na tabela */
-         ent->valor++;
+         if (entV)   * Se a palavra ja esta na tabela *
+            entV->valor++;
 
-      else   /* Se a palavra ainda nao esta na tabela */
-         insere_tabelaVetorDes(tab, palavra);
+         else   * Se a palavra ainda nao esta na tabela *
+            insere_tabelaVetorDes(tabV, palavra);
+      }*/
+
+      aux = tabL;
+
+      /* Lista desordenada */
+      if (nova_entrada(aux, palavra->s))
+         insere_tabelaListaDes(&aux, palavra);
+
+      else
+         aux->valor++;
 
       /* Lendo a proxima palavra */
       le_palavra(file, palavra);
@@ -76,7 +67,11 @@ int main(int argc, char *argv[]) {
 
    fclose(file);
 
-   imprime_tabelaVetor(tab);
+/*      imprime_tabelaVetor(tabV);
+      destroi_tabelaVetor(tabV);
+*/
+      imprime_tabelaLista(tabL);
+      destroi_tabelaLista(tabL);
 
    return 0;
 }
